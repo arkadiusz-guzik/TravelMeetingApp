@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" type="text/css" th:href="@{/css/fontello.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/animation.css}"/>
+	<link rel="stylesheet" th:href="@{/css/form-css.css}"/>
+	
+		
+	<title>Repertoire</title>
+</head>
+<body>
+	<header id="header">
+		<nav id="nav">
+			<div id="navigate">
+			<div>
+				<button type="button" id="user-menu" sec:authorize="isAuthenticated()"  >
+					<div id="user">
+						<p>Hi</p>
+						<p th:text="${name}"></p>
+						<p>
+							<i class="icon-down-open-big"></i>
+						</p>
+						<span style="clear:both;"></span>
+					</div>
+					<div id="logout" onclick="window.location.href='/logout'">
+						Log-out
+					</div>
+					<div sec:authorize="hasRole('ROLE_ADMIN')" id="manage" onclick="window.location.href='/repertoire/manage'">
+						Manage Your Repertoire
+					</div>
+				</button>
+				</div>
+			<div>
+					<button sec:authorize="!isAuthenticated()" type="button" class="nav-btn" id="btn-sign" onclick="window.location.href='/login'">Sign-In</button>
+			</div>	
+			<div>
+				<button type="button" class="nav-btn" onclick="window.location.href='/home'">Home</button>
+				<button type="button" class="nav-btn" onclick="window.location.href='/repertoire/list'">Repertoire</button>
+				<button type="button" class="nav-btn" onclick="window.location.href='/login'">About us</button>
+			</div>
+			
+			</div>
+		</nav>
+	</header>
+	
+	<div id="container">
+		<div>
+		<span>Add a new meeting</span>
+		<hr>
+			<form action="#" th:action="@{/repertoire/manage/meeting/save}"
+ 							 th:object="${meeting}" enctype="multipart/form-data" method="POST" >
+ 				
+ 				<input type="hidden" th:field="*{meetingId}" multiple>
+ 				<div class="form-box">
+ 					<label class="form-label">Image:</label>
+ 					<input id="fimg" type="file" name="files" accept=".jpg"
+	 						class="form-field">
+	 				<label for="fimg" id="lab-file">Choose a file...</label>
+	 				<span>
+	 					<span id="file-spn">File:</span>
+	 					<span id="file-name"></span>
+	 				</span>
+	 				
+ 				</div>
+ 				<div class="form-box">
+	 				<label for="ftitle" class="form-label">Title:</label>
+	 				<input id="ftitle" type="text" th:field="*{title}"
+	 						class="form-field">
+ 				</div>
+ 				
+ 				<div class="form-box">		
+	 				<label for="fdate" class="form-label">Date:</label>
+	 				<input id="fdate" type="text" th:field="*{date}"
+	 						class="form-field" placeholder="dd/mm/yyyy">
+ 				</div>
+ 				
+ 				<div class="form-box">
+	 				<label for="ftime" class="form-label">Time(min):</label>
+	 				<input id="ftime" type="text" th:field="*{runningTime}"
+	 						class="form-field" >
+ 				</div>
+ 				
+ 				<div class="form-box">
+	 				<label for="fdesc" class="form-label">Description:</label>
+	 				<textarea maxlength="200" id="fdesc"  th:field="*{description}" placeholder="Limit length: 200"
+	 						class="form-field" ></textarea> 				
+ 				</div>
+ 				<div id="textLength">Lenght: <span id="length">200</span></div>
+ 				<button type="submit" class="btn-submit">Confirm</button>						 
+ 			</form>
+ 			
+ 			<hr>
+ 			<a th:href="@{/repertoire/manage}" >Back to manage panel</a>
+		</div>
+	</div>
+	
+	<footer></footer>
+</body>
+</html>
+<script th:src="@{/js/form-js.js}"></script>
+<script th:src="@{/js/meeting-form-js.js}"></script>

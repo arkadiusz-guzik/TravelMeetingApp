@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" th:href="@{/css/login-css.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/fontello.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/animation.css}"/>
+		
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+	<title>TripMeeting - Registration</title>
+</head>
+<body>
+
+	
+	<div id="photo"></div>
+	<div id="container">
+		<div id=sign-in-box>
+			<div id="top-text">Sign Up</div>
+			<form action="#" th:action="@{/processRegistrationForm}"  th:object="${crmUser}" method="POST">
+
+				    <div class="form-group">
+				        <div class="col-xs-15">
+				            <div>
+								<div th:if="${registrationError}" class="error-text">
+									<span th:text="${registrationError}"></span>
+								</div>																	
+				            </div>
+				        </div>
+					</div>
+
+					<div class="input-box">
+						<label for="fname" class="form-label">User name:</label>
+						<input maxlength="10" id="fname" th:field="*{userName}" type="text">
+					</div>
+					
+					<div th:if="${#fields.hasErrors('userName')}" class="error-text">
+						<ul>
+							<li th:each="err : ${#fields.errors('userName')}" th:text="'User name ' + ${err}" />
+						</ul>						
+					</div>
+
+					<div class="input-box">
+						<label for="fpassword" class="form-label">Password:</label>
+						<input id="fpassword" th:field="*{password}" type="password">
+					</div>
+					
+					<div th:if="${#fields.hasErrors('password')}" class="error-text">
+						<ul>
+						  	<li th:each="err : ${#fields.errors('password')}" th:text="'Password ' + ${err}" />
+						</ul>						
+					</div>
+					
+					<div class="input-box">
+						<label for="fpassword" class="form-label">Confirm password:</label>
+						<input id="fpassword" th:field="*{matchingPassword}" type="password">
+					</div>
+					
+					<div th:if="${#fields.hasErrors('matchingPassword')}" class="error-text">
+						<ul>
+						  	<li th:each="err : ${#fields.errors('matchingPassword')}" th:text="'Password ' + ${err}" />
+						</ul>						
+					</div>
+					
+					<div class="input-box">
+						<label for="femail" class="form-label">Email:</label>
+						<input id="femail" th:field="*{email}" type="text">
+					</div>
+					
+					<div th:if="${#fields.hasErrors('email')}" class="error-text">
+						<ul>
+						  	<li th:each="err : ${#fields.errors('email')}" th:text="'Email ' + ${err}" />
+						</ul>						
+					</div>
+
+					<div id="confirm-box">						
+						<button type="submit" id="submit-button">Sign Up</button>
+					</div>
+						   
+					<hr>
+					<div id="bottom-text">
+						<div id="ask">Do you have an account?</div>
+						<div id="link"><a th:href="@{/login}">Sign In</a></div>
+						<div class="clear"></div>
+					</div>
+				</form>
+				
+			</div>
+		</div>
+	<div class="clear"></div>
+</body>
+</html>

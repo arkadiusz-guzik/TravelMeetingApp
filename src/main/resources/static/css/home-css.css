@@ -1,0 +1,278 @@
+body{
+	width:100%;
+	margin: 0px;
+	font-family: 'Roboto', sans-serif;
+	background-color: #F8F8F8;
+}
+
+button:active{
+	outline:none;
+}
+
+button:focus{
+	outline:none;
+}
+/* ----------------HEADER-------------------------*/
+nav{
+	
+	width: 620px;
+	height: 110px;
+	margin: 0px 200px 250px auto;
+	padding-top: 25px;
+	text-align: right;
+}
+
+nav > div > div{
+	float:right;
+	right: 0;
+    position: relative;
+    
+}
+
+.nav-btn{
+	
+	background-color: transparent;
+	border: none;
+	color: white;
+	margin: 35px 27px;
+	text-align: center;
+	display: inline-block;
+	font-size: 14px;
+	position: relative;
+	text-decoration: none;
+	cursor: pointer;
+	
+}
+
+.nav-btn::after{
+	position: absolute;
+	content: "";
+	width: 100%;
+	height: 3px;
+	top: 100%;
+	left: 0;
+	background: #ffffff;
+	transition: transform 0.5s;
+	transform: scaleX(0);
+	transform-origin: right;
+}
+
+.nav-btn:hover::after {
+	transform: scaleX(1);
+  	transform-origin: left;
+}
+
+#user-menu > div > p{
+	float:left;
+	margin: 0px;
+	margin-left: 5px;
+	padding:0px;
+}
+
+#user-menu > div > p > i{
+	font-size: 20px;
+}
+
+#user-menu{
+	margin: 32px 0px;
+	top:0;
+	float:rigth;
+	font-size: 18px;
+	padding-bottom:0;
+	text-align: center;
+	background-color: transparent;
+	border: none;
+	color: white;
+	display: inline-block;
+	position: relative;
+	text-decoration: none;
+	cursor: pointer;
+	
+	
+}
+
+
+#user{
+	height: 25px;
+}
+
+#user::after{
+	position: absolute;
+	content: "";
+	width: 100%;
+	height: 3px;
+	top: 100%;
+	left: 0;
+	background: #ffffff;
+	transition: transform 0.5s;
+	transform: scaleX(0);
+	transform-origin: right;
+}
+
+
+
+#user-menu:hover #user::after {
+	transform: scaleX(1);
+  	transform-origin: left;
+}
+
+#user-menu:hover > div {
+	display: block;
+}
+
+#manage{
+	position: fixed;
+	display: none;
+	width: 110px;
+	height: 45px;
+	margin-top:46px;
+	padding-top:15px;
+	margin-bottom: 20px;
+}
+
+#logout{
+	position: fixed;
+	margin-top:0px;
+	padding-top:20px;
+	display: none;
+	width: 110px;
+	height: 25px;
+}
+#btn-sign{
+	border: solid;
+	padding: 7px 20px;
+	border-radius: 5px;
+	margin-top: 25px;
+	font-size: 18px;
+}
+
+#btn-sign:hover{
+	border: none;
+	padding: 9.5px 23px;
+	
+	
+}
+
+#header{
+	background-image: url("../../image/home-back.jpg");
+	height: 890px;
+	background-size: 100% 100%;
+  	background-repeat: no-repeat;
+}
+
+#div-signboard{
+	margin: 110px 0 0 0;
+	transition: 1s;
+}
+
+.sentense-signboard{
+	color: white;
+	font-size: 61px;
+	width: 450px;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#spn-res{
+	cursor: pointer;
+	display: inline-block;
+	position: relative;
+	font-size: 20px;
+	transition: 0.6s;
+}
+
+
+#res-btn{
+	margin: 30px 0 0 0;
+	padding: 11px 0px;
+	background-color: transparent;
+	border: solid;
+	color: white;
+	border-radius: 5px;
+	cursor: pointer;
+	text-align: center;
+	width: 252px;
+}
+
+#spn-res:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  
+}
+
+#res-btn:hover #spn-res {
+  padding-right: 25px;
+}
+
+#res-btn:hover #spn-res:after {
+  opacity: 1;
+  right: 0;
+}
+
+
+/* ----------------BODY-------------------------*/
+
+#container{
+	background-color: #F8F8F8;
+	height: 670px;
+}
+
+#box{
+	width: 1254px;
+	height: 458px;
+	margin: 176px auto;
+	background-color: white;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.sqrt{
+	width: 418px;
+	height:458px;
+	float: left;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	cursor: pointer;
+}
+
+.sqrt:hover{
+	background-color:#e8e8e8;
+	transform: scale(1.1);
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	transition: 0.3s;
+}
+
+.inf{
+	
+	float:left;
+	font-size: 35px;
+	width: 180px;
+	padding-left: 90px;	
+}
+
+.inf-img{
+	float:left;
+	width: 170px;
+	padding-left: 20px;
+	bottom: 0;
+	display: block;
+	cursor: pointer;
+}
+
+
+
+/*-------------FOOTER--------------------------*/
+
+footer{
+	height: 100px;
+	background-color: #515151;	
+}
+
+
+
+
+	

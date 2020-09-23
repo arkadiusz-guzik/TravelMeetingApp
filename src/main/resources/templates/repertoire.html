@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorator="layout/default" xmlns:layout="http://www.thymeleaf.org/"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	  <!--  <meta name="_csrf" content="${_csrf.token}"/> -->
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+	
+	<link rel="stylesheet" th:href="@{/css/repertoire-css.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/fontello.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/animation.css}"/>
+	<script th:inline="javascript" type="text/javascript">
+		var seats = [];
+			
+		function findIndex(meetingIndex, audienceIndex){
+			var index = 0;
+			var i = 0;
+				
+			[# th:each="meeting : ${meetings}"]	
+				
+				if(i<meetingIndex){
+					
+					index = index+[[${meeting.audiences.size()}]];
+					i++;
+				}
+			[/]
+			
+			index = parseInt(index) + parseInt(audienceIndex);
+			
+			return index;
+		}
+	
+		function on(meetingIndex, audienceIndex) {
+			
+			let index = findIndex(meetingIndex, audienceIndex);
+	
+			document.getElementsByClassName("overlay")[index].style.display ="block";
+			
+		}
+	
+		function off(meetingIndex, audienceIndex) {
+			let index = findIndex(meetingIndex, audienceIndex);
+	
+			document.getElementsByClassName("overlay")[index].style.display = "none";
+			
+			if(seats.length!=0){
+				seats=[];
+				location.reload();
+			}
+		}				
+								
+		
+		function removeItem(array, value) {
+			  var index = array.indexOf(value);
+			  if (index > -1) {
+			    array.splice(index, 1);
+			  }
+			  return array;
+			}
+	
+		function add(buttonElement){
+			
+			if(seats.indexOf(buttonElement.getElementsByClassName("e")[0].textContent) == -1)
+			{
+				buttonElement.style.backgroundColor = "#7dd847";
+				seats.push(buttonElement.getElementsByClassName("e")[0].textContent);
+			}else{
+				buttonElement.style.backgroundColor = "#bcf8c0";
+				seats = removeItem(seats, buttonElement.getElementsByClassName("e")[0].textContent);
+			}
+			
+		}
+		
+		
+		function buy(meetingId, audienceId, meetingIndex, audienceIndex){
+			for(let i=0; i<document.getElementsByClassName("box-win-seat-empty").length; i++){
+				for(let j=0; j<seats.length; j++){
+					if(document.getElementsByClassName("box-win-seat-empty")[i].getElementsByClassName("e")[0].textContent == seats[j]){
+						document.getElementsByClassName("box-win-seat-empty")[i].style.backgroundColor = "#bcf8c0";
+					}	
+				}
+			}
+			send(meetingId, audienceId);
+			off(meetingIndex, audienceIndex);
+			
+		}
+		
+		
+		function send(meetingId, audienceId){
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			
+			var headers={};
+			
+			headers[header]=token;
+			$.ajax({
+				  url: "/repertoire/buy",
+				  type: "POST",
+				  headers: headers,
+				  data: JSON.stringify({ 
+					  meetingId : meetingId,
+					  audienceId : audienceId,
+					  name : seats
+					}),
+				  contentType:'application/json',
+				  success: function() {   
+				        location.reload();  
+				  },
+				  error: function() {
+					  alert("Error");
+				  }	  
+			})
+		}
+		  
+								
+	</script>		
+	<title>Repertoire</title>
+</head>
+<body>
+	<header id="header">
+		<nav id="nav">
+			<div id="navigate">
+			<div>
+				<button type="button" id="user-menu" sec:authorize="isAuthenticated()"  >
+					<div id="user">
+						<p>Hi</p>
+						<p th:text="${name}"></p>
+						<p>
+							<i class="icon-down-open-big"></i>
+						</p>
+						<span style="clear:both;"></span>
+					</div>
+					<div id="logout" onclick="window.location.href='/logout'">
+						Log-out
+					</div>
+					<div sec:authorize="hasRole('ROLE_ADMIN')" id="manage" onclick="window.location.href='/repertoire/manage'">
+						Manage Your Repertoire
+					</div>
+				</button>
+				</div>
+			<div>
+					<button sec:authorize="!isAuthenticated()" type="button" class="nav-btn" id="btn-sign" onclick="window.location.href='/login'">Sign-In</button>
+			</div>	
+			<div>
+				<button type="button" class="nav-btn" onclick="window.location.href='/home'">Home</button>
+				<button type="button" class="nav-btn" onclick="window.location.href='/repertoire/list'">Repertoire</button>
+				<button type="button" class="nav-btn" onclick="window.location.href='/login'">About us</button>
+			</div>
+			
+			</div>
+		</nav>
+		
+		<div id="div-signboard">
+			<div class="sentense-signboard">Make a reservation</div>
+		</div>
+		<div class="sentense-signboard">
+			<i class="icon-down-open-big"></i>
+		</div>
+	</header>
+
+	<div id="container">
+		<div class="box-container" th:each="meeting, state : ${meetings}">
+			<div th:text="${meeting.title}+' - '+${meeting.date}"></div>
+			<div class="box-item">
+				
+				
+				<div style="float:left;" >
+					<img th:onerror="'this.style.display=\'none\'; document.getElementsByClassName(\'lackOfImg\')['+ ${state.index}+'].style.display=\'block\';'" class="box-img" th:src="@{'/image/photos/'+${meeting.title}+'.jpg'}">
+					<div class="lackOfImg"><div class="lackOfImg-text">No photo<hr></div></div>
+				</div>
+				<div style="float:left; margin-left: 40px;">
+					<div class="box-inf">Information: </div>
+					<div class="box-desc" th:text="${meeting.description}"></div>
+					<div class="box-run">Running time: <span th:text="${meeting.runningTime}" ></span> min</div>
+					
+					<div class="box-hours" th:each="audience, state2 : ${meeting.audiences}">
+						<div class="box-hour" th:text="${audience.hour}" sec:authorize="!isAuthenticated()" th:onclick="window.location.href='/login'"></div>
+						<div th:if="${state.index==0}">
+							
+						<div>
+
+							<div class="box-hour" th:text="${audience.hour}" sec:authorize="isAuthenticated()" th:onclick="'on(\''+ ${state.index} +'\',\''+${state2.index} +'\');'"></div>
+						</div>
+						
+						
+						</div>
+						<div th:if="${state.index!=0}">
+							<div class="box-hour" th:text="${audience.hour}" sec:authorize="isAuthenticated()" th:onclick="'on(\''+ ${state.index}+'\',\''+${state2.index} +'\');'"></div>
+						</div>
+		         
+		          		<div class="overlay">
+							<div id="reserve-window" >
+								<div th:if="${state.index==0}">
+									<i th:onclick="'off(\''+ ${state.index} +'\',\''+${state2.index} +'\');'" class="icon-cancel"></i>
+								</div>
+								<div th:if="${state.index!=0}">
+									<i th:onclick="'off(\''+ ${state.index} +'\',\''+${state2.index} +'\');'" class="icon-cancel"></i>
+								</div>
+
+								<div id="reserve-box">
+									
+									<div th:each="seat : ${audience.seats}">
+										<div th:if="${seat.getAudienceId()}==${audience.audienceId}">
+											<div th:unless="${seat.userId ==''}">
+												<div class="box-win-seat-taken">
+													<div th:text="${seat.name}"></div>
+												</div>
+											</div>
+											<div th:if="${seat.userId ==''}">
+												<div class="box-win-seat-empty" onclick="add(this)" >
+													<div class="e" th:text="${seat.name}"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div>
+									<div style="float: left;">
+										<div class="legend-box">
+											<div>Cost of ticket: <span th:text="${audience.price}"></span>$</div>
+										</div>
+										<div class="legend-box">
+											<div class=legend-color style="background-color:#bcf8c0;"></div><div class="legend-text"> - a empty seat </div><div style="clear:both;"></div>
+										</div>
+										<div class="legend-box">
+											<div class=legend-color style="background-color:#e3e4e6;"></div><div class="legend-text"> - a taken seat </div><div style="clear:both;"></div>
+										</div>
+									</div>
+									<div id="btn-confirm" th:onclick="'buy(\'' + ${meeting.meetingId} +'\',\''+ ${state2.index} +'\',\''+ ${state.index} +'\',\''+${state2.index} +'\');'">Buy</div>		
+									<div style="clear:both;"></div>				
+								</div>
+							</div>
+						</div>
+		          </div>
+		          <div style="clear: both;"></div>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+		</div>
+	</div>
+	
+	<footer>
+	</footer>
+</body>
+
+
+
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+
+
+

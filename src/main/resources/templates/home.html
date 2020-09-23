@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8">
+		<title>Home</title>
+		<link rel="stylesheet" th:href="@{/css/home-css.css}"/>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/fontello.css}"/>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/animation.css}"/>
+		
+		<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+	
+	<header id="header">
+		<nav id="nav">
+			<div id="navigate">
+			<div>
+				<button type="button" id="user-menu" sec:authorize="isAuthenticated()"  >
+					<div id="user">
+						<p>Hi</p>
+						<p th:text="${name}"></p>
+						<p>
+							<i class="icon-down-open-big"></i>
+						</p>
+						<span style="clear:both;"></span>
+					</div>
+					<div id="logout" onclick="window.location.href='/logout'">
+						Log-out
+					</div>
+					<div sec:authorize="hasRole('ROLE_ADMIN')" id="manage" onclick="window.location.href='/repertoire/manage'">
+						Manage Your Repertoire
+					</div>
+				</button>
+				</div>
+			<div>
+					<button sec:authorize="!isAuthenticated()" type="button" class="nav-btn" id="btn-sign" onclick="window.location.href='/login'">Sign-In</button>
+			</div>	
+			<div>
+				<button type="button" class="nav-btn" onclick="window.location.href='/home'">Home</button>
+				<button type="button" class="nav-btn" onclick="window.location.href='/repertoire/list'">Repertoire</button>
+				<button type="button" class="nav-btn" onclick="window.location.href='/repertoire/list'">About us</button>
+			</div>
+			
+			</div>
+		</nav>
+		
+		<div id="div-signboard">
+			<div class="sentense-signboard">Explore</div>
+			<div class="sentense-signboard">the whole world</div>
+			<div class="sentense-signboard">
+				<button type="button" id="res-btn" onclick="window.location.href='/repertoire/list'"><span id="spn-res"><span style="color:white;">Reservation</span></span></button>
+			</div>
+		</div>
+	</header>
+	
+	 <div id="container">
+		<div id="box">
+			<div class="sqrt" onclick="window.location.href='/repertoire/list'">	
+				<div class=inf>Explore new places</div>
+				<div class=inf-img>
+					<i class="icon-globe"></i>
+				</div>
+				<div style="clear: both;"></div>
+			</div>
+			<div class="sqrt" onclick="window.location.href='/repertoire/list'">
+				<div class=inf>Listen to amazing adventures</div>
+				<div class=inf-img>
+					<i class="icon-group"></i>
+				</div>
+				<div style="clear: both;"></div>
+			</div>
+			<div class="sqrt" onclick="window.location.href='/repertoire/list'"> 
+				<div class=inf>Ask questions</div>
+				<div class=inf-img>
+					<i class="icon-help"></i>
+				</div>
+				<div style="clear: both;"></div>				
+			</div>
+			<div style="clear: both;"></div>
+		</div>
+	</div>
+	<footer>
+	</footer>
+</body>
+</html>

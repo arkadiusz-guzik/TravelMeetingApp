@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" th:href="@{/css/login-css.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/fontello.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/animation.css}"/>
+		
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+	<title>TripMeeting - Login</title>
+</head>
+<body>
+
+	
+	<div id="photo"></div>
+	<div id="container">
+		<div id=sign-in-box>
+			<div id="top-text">Sign In</div>
+			<form action="#" th:action="@{/authenticateTheUser}"  method="POST">
+
+				    <div class="input-box">
+				        <div class="col-xs-15">
+				            <div>
+								
+								<!-- Check for login error -->
+								<div th:if="${param.error != null}">		            
+									<div class="error-text">
+										Invalid username and password.
+									</div>
+								</div>	
+									       
+								<!-- Check for logout -->
+								
+								<div th:if="${param.logout != null}">
+									<div class="error-text">
+										You have been logged out.
+									</div>
+							    </div>
+
+				            </div>
+				        </div>
+				    </div>
+
+					<div class="input-box">
+						<label for="fname" class="form-label">User name:</label>
+						<input id="fname" name="username" type="text">
+					</div>
+
+					<div class="input-box">
+						<label for="fpassword" class="form-label">Password:</label>
+						<input id="fpassword" name="password" type="password">
+					</div>
+
+					<div id="confirm-box">						
+						<button type="submit" id="submit-button">Login</button>
+					</div>
+					
+					<input type="hidden"
+						   name="${_csrf.parameterName}"
+						   value="${_csrf.token}"/>
+					<hr>
+					<div id="bottom-text">
+						<div id="ask">Don't have an account?</div>
+						<div id="link"><a th:href="@{/registration}">Sign Up</a></div>
+						<div class="clear"></div>
+					</div>
+				</form>
+				
+			</div>
+		</div>
+	<div class="clear"></div>
+</body>
+</html>

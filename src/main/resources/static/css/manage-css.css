@@ -1,0 +1,244 @@
+body{
+	width:100%;
+	margin: 0px;
+	font-family: 'Roboto', sans-serif;
+	background-color: #F8F8F8;
+}
+
+button:active{
+	outline:none;
+}
+
+button:focus{
+	outline:none;
+}
+
+/* ----------------HEADER-------------------------*/
+nav{
+	
+	width: 620px;
+	height: 110px;
+	margin: 0px 200px 250px auto;
+	padding-top: 25px;
+	text-align: right;
+}
+
+nav > div > div{
+	float:right;
+	right: 0;
+    position: relative;
+    
+}
+
+.nav-btn{
+	
+	background-color: transparent;
+	border: none;
+	color: white;
+	margin: 35px 27px;
+	text-align: center;
+	display: inline-block;
+	font-size: 14px;
+	position: relative;
+	text-decoration: none;
+	cursor: pointer;
+	
+}
+
+.nav-btn::after{
+	position: absolute;
+	content: "";
+	width: 100%;
+	height: 3px;
+	top: 100%;
+	left: 0;
+	background: #ffffff;
+	transition: transform 0.5s;
+	transform: scaleX(0);
+	transform-origin: right;
+}
+
+.nav-btn:hover::after {
+	transform: scaleX(1);
+  	transform-origin: left;
+}
+
+#user-menu > div > p{
+	float:left;
+	margin: 0px;
+	margin-left: 5px;
+	padding:0px;
+}
+
+#user-menu > div > p > i{
+	font-size: 20px;
+}
+
+#user-menu{
+	margin: 32px 0px;
+	top:0;
+	font-size: 18px;
+	padding-bottom:0;
+	text-align: center;
+	background-color: transparent;
+	border: none;
+	color: white;
+	display: inline-block;
+	position: relative;
+	text-decoration: none;
+	cursor: pointer;
+	
+	
+}
+
+
+#user{
+	height: 25px;
+}
+
+#user::after{
+	position: absolute;
+	content: "";
+	width: 100%;
+	height: 3px;
+	top: 100%;
+	left: 0;
+	background: #ffffff;
+	transition: transform 0.5s;
+	transform: scaleX(0);
+	transform-origin: right;
+}
+
+
+
+#user-menu:hover #user::after {
+	transform: scaleX(1);
+  	transform-origin: left;
+}
+
+#user-menu:hover > div {
+	display: block;
+}
+
+#manage{
+	position: fixed;
+	display: none;
+	width: 110px;
+	height: 45px;
+	margin-top:46px;
+	padding-top:15px;
+	margin-bottom: 20px;
+}
+
+#logout{
+	position: fixed;
+	margin-top:0px;
+	padding-top:20px;
+	display: none;
+	width: 110px;
+	height: 25px;
+}
+#btn-sign{
+	border: solid;
+	padding: 7px 20px;
+	border-radius: 5px;
+	margin-top: 25px;
+	font-size: 18px;
+}
+
+#btn-sign:hover{
+	border: none;
+	padding: 9.5px 23px;
+	
+	
+}
+
+#header{
+	background-color: #049F8F;
+	height: 120px;
+	background-size: 100% 100%;
+
+    overflow: hidden;
+}
+
+
+/* ----------------HEADER-------------------------*/
+
+.tbody-audience{
+	display: none;
+}
+
+
+
+.tbody-seat{
+	display:none;
+}
+
+.hide{
+	display: none;
+}
+
+#container{
+	width: 80%;
+	height: auto;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top: 50px;
+	min-height: 747px;
+	margin-bottom: 40px;
+	
+}
+.table-box{
+	float:left;
+	width: 23%;
+	margin: 20px 80px 20px 15px;
+}
+
+.table-box:nth-child(2){
+	width: 550px;
+}
+
+.btn {
+	display:block;
+	margin: 2px;
+}
+
+.db-name-spn{
+	font-size: 35px;
+	
+	margin-left: -10%;
+	font-family: 'Roboto', sans-serif;
+	
+}
+
+.add-btn{
+	width: 255px;
+	height: 50px;
+	font-size: 20px;
+	background-color: #049F8F;
+	margin-bottom:20px;
+	color: white;
+	border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-btn:hover{
+	background-color:#04b5a3;
+}
+
+#btn-box{
+	width: 255px;
+	margin-left: auto;
+	margin-right:90px;
+	height: 50px;
+}
+
+/* ----------------FOOTER-------------------------*/
+
+footer{
+
+	height: 100px;
+	background-color: #515151;	
+}
+	

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<link rel="stylesheet" th:href="@{/css/form-css.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/fontello.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/animation.css}"/>
+	
+		
+	<title>Repertoire</title>
+</head>
+<body>
+	<header id="header">
+		<nav id="nav">
+			<div id="navigate">
+			<div>
+				<button type="button" id="user-menu" sec:authorize="isAuthenticated()"  >
+					<div id="user">
+						<p>Hi</p>
+						<p th:text="${name}"></p>
+						<p>
+							<i class="icon-down-open-big"></i>
+						</p>
+						<span style="clear:both;"></span>
+					</div>
+					<div id="logout" onclick="window.location.href='/logout'">
+						Log-out
+					</div>
+					<div sec:authorize="hasRole('ROLE_ADMIN')" id="manage" onclick="window.location.href='/repertoire/manage'">
+						Manage Your Repertoire
+					</div>
+				</button>
+				</div>
+			<div>
+					<button sec:authorize="!isAuthenticated()" type="button" class="nav-btn" id="btn-sign" onclick="window.location.href='/login'">Sign-In</button>
+			</div>	
+			<div>
+				<button type="button" class="nav-btn" onclick="window.location.href='/home'">Home</button>
+				<button type="button" class="nav-btn" onclick="window.location.href='/repertoire/list'">Repertoire</button>
+				<button type="button" class="nav-btn" onclick="window.location.href='/login'">About us</button>
+			</div>
+			
+			</div>
+		</nav>
+	</header>
+	
+	<div id="container">
+		<div>
+		<span>Add a new seat</span>
+		<hr>
+			<form action="#" th:action="@{/repertoire/manage/seat/save/(audienceId=${param.audienceId})}"
+ 							 th:object="${seat}" method="POST">
+
+ 				<input type="hidden" th:field="*{seatId}">
+ 				
+ 				<div class="form-box">
+	 				<label for="fname" class="form-label">Name:</label>
+	 				<input id="fname" type="text" th:field="*{name}"
+	 						class="form-field">
+ 				</div>
+ 				
+ 				<div class="form-box">		
+	 				<label for="fuserId" class="form-label">UserId:</label>
+	 				<input id="fuserId" type="text" th:field="*{userId}"
+	 						class="form-field" >
+ 				</div>
+
+ 				<button type="submit" class="btn-submit">Confirm</button>						 
+ 			</form>
+ 			
+ 			<hr>
+ 			<a th:href="@{/repertoire/manage}" >Back to manage panel</a>
+		</div>
+	</div>
+	
+	<footer></footer>
+</body>
+
+</html>

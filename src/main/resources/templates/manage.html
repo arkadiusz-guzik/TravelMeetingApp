@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!--  <meta name="_csrf" content="${_csrf.token}"/>-->
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+	
+	
+	
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<link rel="stylesheet" th:href="@{/css/manage-css.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/fontello.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/animation.css}"/>
+		
+	<title>Repertoire</title>
+</head>
+<body>
+	<header id="header">
+		<nav id="nav">
+			<div id="navigate">
+			<div>
+				<button type="button" id="user-menu" sec:authorize="isAuthenticated()"  >
+					<div id="user">
+						<p>Hi</p>
+						<p th:text="${name}"></p>
+						<p>
+							<i class="icon-down-open-big"></i>
+						</p>
+						<span style="clear:both;"></span>
+					</div>
+					<div id="logout" onclick="window.location.href='/logout'">
+						Log-out
+					</div>
+					<div sec:authorize="hasRole('ROLE_ADMIN')" id="manage" onclick="window.location.href='/repertoire/manage'">
+						Manage Your Repertoire
+					</div>
+				</button>
+				</div>
+			<div>
+					<button sec:authorize="!isAuthenticated()" type="button" class="nav-btn" id="btn-sign" onclick="window.location.href='/login'">Sign-In</button>
+			</div>	
+			<div>
+				<button type="button" class="nav-btn" onclick="window.location.href='/home'">Home</button>
+				<button type="button" class="nav-btn" onclick="window.location.href='/repertoire/list'">Repertoire</button>
+				<button type="button" class="nav-btn" onclick="window.location.href='/login'">About us</button>
+			</div>
+			
+			</div>
+		</nav>
+	</header>
+	
+		<div id="container">
+			
+			<div id="container-fluid">
+				<div id='btn-box'>
+					<button onclick="addMeeting()" class="add-btn">Add a new meeting</button>
+				</div>
+			
+				<div class="table-box">
+				<span class="db-name-spn">Meetings</span>
+				<table class="table table-bordered table-hover">
+					<thead class="thead-dark">
+						<tr>
+							<th>Title</th>
+							<th>Date</th>
+							<th>Description</th>			
+							<th>Time(min)</th>
+							<th>Actions</th>	
+						</tr>
+					</thead>
+					
+					<tbody>
+						<tr th:each="meeting, state : ${meetings}" th:onclick="'setAudiences('+${state.index}+', this)'">
+							<td th:text="${meeting.title}" />
+							<td th:text="${meeting.date}"/>
+							<td th:text="${meeting.description}"/>
+							<td th:text="${meeting.runningTime}"/>
+							<td>
+								<div th:if="${meeting.audiences.size()}!=7">
+									<a th:href="@{/repertoire/manage/audience/add(meetingId=${meeting.meetingId})}"
+										class="btn btn-success btn-sm">
+										Add a audience
+									</a>
+								</div>
+								<a th:href="@{/repertoire/manage/meeting(meetingId=${meeting.meetingId})}"
+									class="btn btn-info btn-sm">
+									Update
+								</a>
+								
+								<a th:href="@{/repertoire/manage/meeting/delete(meetingId=${meeting.meetingId})}"
+									class="btn btn-danger btn-sm"
+									onclick="if (!(confirm('Are you sure you want to delete this meeting?'))) return false">
+									Delete
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				</div>
+				
+				<div class="table-box">
+				<span class="db-name-spn">Audiences</span>
+				<table class="table table-bordered table-hover" id="myTable">
+					<thead class="thead-dark">
+						<tr>
+							<th>Hour</th>
+							<th>Price</th>
+							<th>Actions</th>			
+						</tr>
+					</thead>
+					<tbody  class="tbody-audience" th:each="meeting, state1 : ${meetings}">
+						  <tr th:each="audience, state2 : ${meeting.audiences}" th:onclick="'setSeats('+${state1.index}+', '+${state2.index}+', this)'">
+							<td th:text="${audience.hour}"/>
+							<td th:text="${audience.price}"/>
+							<td> 
+								<div th:if="${audience.seats.size()}!=21">
+									<a th:href="@{/repertoire/manage/seat/add(audienceId=${audience.audienceId})}"
+										class="btn btn-success btn-sm">
+										Add a seat
+									</a>
+								</div>
+							    <a th:href="@{/repertoire/manage/audience(meetingId=${meeting.meetingId}, audienceId=${audience.audienceId})}"
+									class="btn btn-info btn-sm">
+									Update
+								</a>
+								
+								<a th:href="@{/repertoire/manage/audience/delete(audienceId=${audience.audienceId})}"
+									class="btn btn-danger btn-sm"
+									onclick="if (!(confirm('Are you sure you want to delete this audience?'))) return false">
+									Delete
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				</div>
+				
+				<div class="table-box">
+				<span class="db-name-spn">Seats</span>
+				<table style="display:none;" class="table table-bordered table-hover hide" th:each="meeting : ${meetings}"> 
+					<thead class="thead-dark">
+						<tr>
+							<th>Name</th>
+							<th>UserId</th>
+							<th>Actions</th>			
+						</tr>
+					</thead>
+					
+					<tbody class="tbody-seat" th:each="audience, state : ${meeting.audiences}">
+						
+						<tr  class="tr-seat" th:each="seat, state2 : ${audience.seats}" th:onclick="setSeatElement(this)">
+							
+							<td th:text="${seat.name}" />
+							<td th:text="${seat.userId}"/>
+							<td>
+								<a th:href="@{/repertoire/manage/seat(audienceId=${audience.audienceId}, seatId=${seat.seatId})}"
+									class="btn btn-info btn-sm">
+									Update
+								</a>
+								
+								<a th:href="@{/repertoire/manage/seat/delete(seatId=${seat.seatId})}"
+									class="btn btn-danger btn-sm"
+									onclick="if (!(confirm('Are you sure you want to delete this meeting?'))) return false">
+									Delete
+								</a>
+							</td>
+						</tr>
+						
+					</tbody>
+				</table>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+		</div>
+		
+		<footer></footer>
+		
+
+	</body>
+</html>
+<script th:src="@{/js/form-js.js}"></script>
+<script th:inline="javascript" th:src="@{/js/manage-js.js}"></script>	
+	
+	
+	

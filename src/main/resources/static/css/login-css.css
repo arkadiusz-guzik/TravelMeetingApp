@@ -1,0 +1,128 @@
+body{
+	margin: 0px;
+	font-family: 'Roboto', sans-serif;
+	background-color: #F5F5F5;
+}
+
+#photo{
+	background-image: url("../../image/signup-back.jpg");
+	height: 1058px;
+	width: 45%;
+	background-size: auto 100%;	
+	background-repeat: repeat-y;
+	float:left;
+	
+}
+
+#container{
+	float: left;
+	width:48%;
+	height:1000px;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+	
+}
+
+#sign-in-box{
+	margin-top: 95px;
+}
+
+#top-text{
+	font-size: 35px;
+	width: 120px;
+	margin-right:auto;
+	margin-left:auto;
+	margin-bottom: 30px;
+	
+}
+
+form{
+	display:block;
+	font-size: 18px;
+	color:#707070;
+	width:300px;
+	margin-right:auto;
+	margin-left:auto;
+}
+
+.input-box{
+	width: 300px;
+	margin-top:30px;
+}
+
+.input-box > input{
+	margin: 10px auto 5px 0;
+	height: 35px;
+	width: 280px;
+	border:none;
+	border-radius: 35px;
+	box-shadow: 3px 6px 6px 1px rgba(0,0,0,0.16);
+	padding-left: 20px;
+	font-size: 16px;
+}
+
+.input-box > input:focus{
+	outline:none;
+	box-shadow: 0px 0px 6px 2px rgba(0,206,7,0.20);
+}
+
+.error-text{
+	color: #d00000;
+}
+
+#submit-button{
+	font-size:17px;
+	width: 150px;
+	background-color:#00CE07;
+	color: #fff;
+	height: 35px;
+	border:none;
+	border-radius: 35px;	
+}
+
+#submit-button:hover{
+	background-color:#00DD07;
+	cursor: pointer;
+}
+
+#confirm-box{
+	width: 150px;
+	margin: 5px auto 20px auto;
+}
+
+.clear{
+	clear:both;
+}
+
+#bottom-text{
+	font-size:15px;
+	display: flex;
+  	align-items: center;
+	justify-content: center;
+}
+
+#ask{
+	float:left;
+	margin-right: 15px;
+}
+
+#link{
+	float:left;
+	color:#007bff;
+}
+
+#link>a{
+	text-decoration: none;
+}
+
+#link:hover{
+	text-decoration: underline;
+	cursor:pointer;
+}
+
+#link>a:visited{
+	color:#007bff;
+}
+
+
