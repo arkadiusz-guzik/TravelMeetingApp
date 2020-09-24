@@ -1,5 +1,5 @@
 # TravelMeetingApp
->TravelMeeting Application is solved a problem people who travel around the world and then they came back to thier countries and they want to tell other about amazing places. This application is helped to organized a new one or modificated existing meeting in easy way. 
+>TravelMeeting Application solves the problem people who travel around the world and then they came back to thier countries and they want to tell other about amazing places. This application is helped to organized a new one or modificated existing meeting in easy way. 
 
 ## Installation
 First you have to open a project and find crate-db.sql file which is based in com.arkadiuszguzik.TravelMeeting.db package. Then you should create database using this file. In next step you have to update maven project to uploading nessecery libraries. After this process you can run TravelMeetingApplication.java file as Java Application. Next you can go to web browser and open localhost:8080 and you should be redirected to main web side of this application.
